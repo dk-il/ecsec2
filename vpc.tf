@@ -2,21 +2,21 @@ resource "aws_vpc" "main" {
   cidr_block           = var.vpc_cidr
   enable_dns_hostnames = true
   tags = {
-    name = "main"
+    name = "portal"
   }
 }
 resource "aws_subnet" "subnet" {
   vpc_id                  = aws_vpc.main.id
-  cidr_block              = cidrsubnet(aws_vpc.main.cidr_block, 8, 1)
+  cidr_block              = cidrsubnet(aws_vpc.main.cidr_block, 4, 1)
   map_public_ip_on_launch = true
-  availability_zone       = "eu-central-1a"
+  availability_zone       = var.az
 }
 
 resource "aws_subnet" "subnet2" {
   vpc_id                  = aws_vpc.main.id
-  cidr_block              = cidrsubnet(aws_vpc.main.cidr_block, 8, 2)
+  cidr_block              = cidrsubnet(aws_vpc.main.cidr_block, 4, 2)
   map_public_ip_on_launch = true
-  availability_zone       = "eu-central-1b"
+  availability_zone       = var.az
 }
 
 resource "aws_internet_gateway" "internet_gateway" {
